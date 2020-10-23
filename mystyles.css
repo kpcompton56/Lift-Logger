@@ -1,0 +1,140 @@
+main .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* center contents */
+    text-align: center;
+    font-family: verdana;
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+
+h1 {
+    color: #5c677d;
+}
+
+h3 {
+    color: #5c677d;
+}
+
+.left-align
+{
+    /* for headers on landing page */
+    text-align: left;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #979dac;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #7d8597;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.scroll {
+    /* for list widgets that overflow vertically */
+    overflow-y: auto;
+}
+
+.widget {
+    height: 400px;
+    width: 350px;
+    border-radius: 5%;
+    border-style: solid;
+    border-color: #add3ff;
+    margin: 20px;
+    padding: 6px 60px;
+    background-color: #c2dffe;
+    color: #5c677d;
+     box-shadow: 5px 5px 10px #85afff;
+}
+
+.modal {
+    color: #5c677d;
+}
+
+.btn1 {
+    /* for adding margin to remove buttons in widgets */
+    margin: 5px;
+}
+
+.form-row>* {
+    margin: 2px 5px 2px 5px;
+    height: 30px;
+}
+
+select {
+    border-radius: 5px;
+    color: #5c677d;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.box {
+    display: flex;
+    flex-wrap: wrap;
+    flex-grow: 0;
+}
+
+.box>* {
+    flex-grow: 0;
+    min-width: 350px;
+    max-width: 350px;
+    width: 350px;
+}
+
+.exerciserow {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+.bottomcontrols {
+    width:100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.bottomcontrols>* {
+    margin: 10px;
+}

@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Work out
+{% endblock %}
+
+{% block main %}
+    <h1 class="left-align">{{ username }}</h1>
+    <h3 class="left-align text-muted">{{ num_workouts }} workouts</h3>
+    <hr/>
+    <div class="container">
+        <form action="/workout" method="post" autocomplete="off" onsubmit="return validateForm({{ lift_array }}, {{ cardio_array }})">
+
+            <!-- Modal -->
+            <div class="modal fade" id="History_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="ModalTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div id="modal_body" class="modal-body">
+                    <ul id="modal_list">
+
+                    </ul>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container" id="rowcontainer">
+                <div class="form-row exerciserow" id="exc_row_0">
+                    <div id="exercise_selector_div_0">
+                        <select name="exercise_selector_0" id="exercise_selector_0" style="width: 175px; height: 30px;" onchange="exc_field_displayer(this, {{ lift_array }}, {{ cardio_array }}, {{ last_workout_array }})">
+                            <option value="" disabled selected hidden>Select exercise...</option>
+                            {% for muscle_group in selection_array %}
+                                <optgroup label="{{ muscle_group[0] }}">
+                                    {% for exercise in muscle_group[1] %}
+                                        <option value="{{ exercise }}">{{ exercise }}</option>
+                                    {% endfor %}
+                                </optgroup>
+                            {% endfor %}
+                            <option disabled>─────────────</option>
+                            <option>Add new...</option>
+                        </select>
+                    </div>
+                    <div id="new_exc_div_0" style="display:none;">
+                        <input type="text" style="border-radius: 5px; margin: 2px; border-style: solid;" placeholder="Name..." name="new_exc_name_0" id="new_exc_name_0" size="5">
+                        <select name="new_exc_mg_selector_0" id="new_exc_mg_selector_0" style="margin: 2px;" onchange="new_exc_field_viewer(this)">
+                            <option value="" disabled selected hidden>Select muscle group...</option>
+                            {% for muscle_group in muscle_groups %}
+                                <option value="{{ muscle_group[0] }}">{{ muscle_group[0] }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div id="lift_div_0" style="display:none;">
+                        <input type="text" class="form-control" name="sets_0" id="sets_0" size="2" autocomplete="off">
+                        <span style="padding: 5px; color: #5c677d;">sets</span>
+                        <input type="text" class="form-control" name="reps_0" id="reps_0" size="3" autocomplete="off">
+                        <span style="padding: 5px; color: #5c677d;">reps</span>
+                        <input type="text" class="form-control" name="resistance_0" id="resistance_0" size="4" autocomplete="off">
+                        <span style="padding: 5px; color: #5c677d;">lbs (optional)</span>
+                    </div>
+                    <div id="cardio_div_0" style="display:none;">
+                        <span style="padding-top: 5px; color: #5c677d;">distance: </span>
+                        <input type="text" class="form-control" name="miles_0" id="miles_0" size="2" autocomplete="off">
+                        <span style="padding: 5px; color: #5c677d;"> miles </span>
+                        <span style="padding: 5px 0px 5px 0px; color: #5c677d;"> duration (optional): </span>
+                        <input type="text" class="form-control" name="hours_0" id="hours_0" size="2" autocomplete="off">
+                        <span style="padding-top: 5px; color: #5c677d;">:</span>
+                        <input type="text" class="form-control" name="minutes_0" id="minutes_0" size="2" autocomplete="off">
+                        <span style="padding-top: 5px; color: #5c677d;">:</span>
+                        <input type="text" class="form-control" name="seconds_0" id="seconds_0" size="2" autocomplete="off">
+                    </div>
+                    <div id="buttons_div_0" style="display:none; height: 30px;">
+                        <button id="rmv_button_0" class="btn btn-outline-secondary btn-sm right" type="button" style="padding: 5px; margin: 2px 5px 2px 5px; height: 30px;" onclick="remove_exercise(this)">remove</button>
+                        <button id="hist_button_0" class="btn btn-outline-secondary btn-sm right" type="button" style="padding: 5px; display:none; margin: 2px 5px 2px 5px; height: 30px;" data-toggle="modal" data-target="#History_Modal" onclick="show_history(this, {{ user_workout_hist }})">show history</button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="container">
+                <div>
+                    <label for="workout_date" style="padding: 5px; color: #5c677d;">Date (optional):</label>
+                    <input type="date" id="workout_date" name="workout_date" style="border-radius: 5px; border-width: 2px; border-style: solid; color: #5c677d; border-color: #5c677d;">
+                </div>
+            </div>
+            <div class="container">
+                <div class="form-row bottomcontrols">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" onclick="add_exercise()">Add Exercise</button>
+                    <button class="btn btn-outline-secondary btn-sm" type="submit">Finish workout!</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- this is my running log
+    <div id="log">This is my log
+        <br>
+    </div>
+
+     <!-- -->
+
+    <script src="static/myscripts.js"></script>
+{% endblock %}

@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Landing
+{% endblock %}
+
+{% block main %}
+    <!-- username and number of workouts at top -->
+    <h1 class="left-align">{{ username }}</h1>
+    <h3 class="left-align text-muted">{{ num_workouts }} workouts</h3>
+    <hr/>
+    <div class="container">
+        <!-- <div id="tester">test</div> -->
+        <!-- this whole section is for the add widget buttons -->
+        <button onclick="toggle(add_widget, exercise_selector, muscle_selector)" style="margin: 2px 5px 2px 5px; height: 30px;" class="btn btn-sm btn-outline-secondary left">Add Widget</button>
+        <form action="/" method="POST" id="add_widget" class="form-group" style="display:none;">
+            <div class="form-row">
+                <div>
+                    <select id="tracking_method" style="height: 30px;" onchange="widget_specifier(exercise_selector, muscle_selector)">
+                        <option selected disabled>Select tracking method...</option>
+                        <option value="Track muscle group">Track muscle group</option>
+                        <option value="Track exercise">Track exercise</option>
+                    </select>
+                </div>
+                <div id="exercise_selector" style="display: none;">
+                    <select name="exc_select" onchange="buttonfunction()">
+                        <option value="" disabled selected hidden>Choose exercise</option>
+                        {% for muscle_group in selection_array %}
+                            <optgroup label="{{ muscle_group[0] }}">
+                                {% for exercise in muscle_group[1] %}
+                                    <option value="{{ exercise }}">{{ exercise }}</option>
+                                {% endfor %}
+                            </optgroup>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div id="muscle_selector" style="display:none;">
+                    <select name="mg_select" onchange="buttonfunction()">
+                        <option selected disabled>Choose muscle group</option>
+                        {% for muscle_group in muscle_groups %}
+                            <option>{{ muscle_group[0] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button class="btn btn-outline-secondary btn-sm" style="display:none;" id="AddButton" type="submit">Add</button>
+            </div>
+        </form>
+
+        <br>
+        <br>
+
+        <div class="box">
+        <!-- this container is for the session history widget -->
+            <figure class="col-lg figure widget scroll">
+                <h4 class="left">Session History</h4>
+                <br>
+                <hr/>
+                <ul style="margin: 0; padding: 5px;">
+                    {% for session in hist_sessions %}
+                        <li style="margin: 0; padding: 0;">
+                            <div style="float:left;">{{ session[0] }}</div>
+                            {% for exc in session[1] %}
+                                <span style="float:right; background-color: transparent; color: #5c677d; margin: 2px;" class="badge">{{ exc }}</span>
+                            {% endfor %}
+                            <span style="float:right; background-color: transparent; color: #5c677d; margin: 2px;" class="badge">{{ session[2] }} lifts</span>
+                            <br>
+                        </li>
+                        <hr/>
+                {% endfor %}
+                </ul>
+            </figure>
+
+        <!-- this container is for the workouts/week widget -->
+            <figure class="col-lg figure widget scroll">
+                <h4 class="left">Workouts per Week</h4>
+                <br>
+                <hr/>
+                <label for="workouts_week_date_range_selector" style="float:left;">View: </label>
+                <select name="workouts_week_date_range_selector" style="float:right;" id="workouts_week_date_range_selector" class="select-styler" onchange="workouts_week_updater(workouts_week_data)">
+                    <option value="1 month" selected>1 month</option>
+                    <option value="3 months">3 months</option>
+                    <option value="6 months">6 months</option>
+                    <option value="1 year">1 year</option>
+                    <option value="All time">All time</option>
+
+                </select>
+                <canvas id="myChart" width="200" height="75"></canvas>
+            </figure>
+
+            {% for user_widget in user_widget_data %}
+                <figure class="col-lg figure widget scroll" id="figure_{{ user_widget[1] }}">
+                    <h4 class="left">{{ user_widget[1] }}</h4>
+
+                    <form action="" method="POST">
+                        <button class="btn btn-outline-secondary btn1 btn-sm right" name="widget_remover_{{ user_widget[1] }}">remove</button>
+                    </form>
+
+                    <br>
+                    <hr/>
+                    {% if user_widget[2] is not none %}
+                        <ul style="margin: 0; padding: 5px;">
+                            {% for lift in user_widget[2] %}
+                                <li>
+                                    <span style="float: left;">{{ lift[0] }}</span>
+                                    {% if lift[1] is not none %}
+                                        <span style=" float: right; background-color: transparent; color: #5c677d; margin: 2px;" class="badge">
+                                            {{ lift[1] }} x {{ lift[2] }}
+                                            {% if lift[3] is not none %}
+                                                 x {{ lift[3] }}
+                                            {% endif %}
+                                        </span>
+                                    {% else %}
+                                        <span style="float: right; background-color: transparent; color: #5c677d; margin: 2px;" class="badge">
+                                            {{ lift[4] }} miles
+                                        </span>
+                                        {% if lift[5] is not none %}
+                                            <span style="float: right; background-color: transparent; color: #5c677d; margin: 2px;" class="badge">
+                                                duration: {{ lift[5] }}
+                                            </span>
+                                        {% endif %}
+                                    {% endif %}
+                                </li>
+                                <hr/>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <label for="widget_date_range_selector_{{ user_widget[1] }}" style="float:left;">View: </label>
+                        <select name="widget_date_range_selector" style="float:right;" id="widget_date_range_selector_{{ user_widget[1] }}" onchange="chart_updater(user_widget_data, this)">
+                            <option value="1 month" selected>1 month</option>
+                            <option value="3 months">3 months</option>
+                            <option value="6 months">6 months</option>
+                            <option value="1 year">1 year</option>
+                            <option value="All time">All time</option>
+
+                        </select>
+                        <canvas id="{{ user_widget[1] }}" width="200" height="75"></canvas>
+                    {% endif %}
+                </figure>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="/static/myscripts.js"></script>
+
+{% endblock %}
