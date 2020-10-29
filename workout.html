@@ -9,7 +9,7 @@
     <h3 class="left-align text-muted">{{ num_workouts }} workouts</h3>
     <hr/>
     <div class="container">
-        <form action="/workout" method="post" autocomplete="off" onsubmit="return validateForm({{ lift_array }}, {{ cardio_array }})">
+        <form action="/lift_logger/workout" method="post" autocomplete="off" onsubmit="return validateForm({{ lift_array }}, {{ cardio_array }})">
 
             <!-- Modal -->
             <div class="modal fade" id="History_Modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -70,11 +70,11 @@
                         <input type="text" class="form-control" name="miles_0" id="miles_0" size="2" autocomplete="off">
                         <span style="padding: 5px; color: #5c677d;"> miles </span>
                         <span style="padding: 5px 0px 5px 0px; color: #5c677d;"> duration (optional): </span>
-                        <input type="text" class="form-control" name="hours_0" id="hours_0" size="2" autocomplete="off">
+                        <input type="text" class="form-control" name="hours_0" id="hours_0" size="2" placeholder="hh" autocomplete="off">
                         <span style="padding-top: 5px; color: #5c677d;">:</span>
-                        <input type="text" class="form-control" name="minutes_0" id="minutes_0" size="2" autocomplete="off">
+                        <input type="text" class="form-control" name="minutes_0" id="minutes_0" size="2" placeholder="mm" autocomplete="off">
                         <span style="padding-top: 5px; color: #5c677d;">:</span>
-                        <input type="text" class="form-control" name="seconds_0" id="seconds_0" size="2" autocomplete="off">
+                        <input type="text" class="form-control" name="seconds_0" id="seconds_0" size="2" placeholder="ss" autocomplete="off">
                     </div>
                     <div id="buttons_div_0" style="display:none; height: 30px;">
                         <button id="rmv_button_0" class="btn btn-outline-secondary btn-sm right" type="button" style="padding: 5px; margin: 2px 5px 2px 5px; height: 30px;" onclick="remove_exercise(this)">remove</button>
@@ -92,7 +92,7 @@
             <div class="container">
                 <div class="form-row bottomcontrols">
                     <button type="button" class="btn btn-outline-secondary btn-sm" onclick="add_exercise()">Add Exercise</button>
-                    <button class="btn btn-outline-secondary btn-sm" type="submit">Finish workout!</button>
+                    <button class="btn btn-outline-secondary btn-sm" type="submit">Submit workout!</button>
                 </div>
             </div>
         </form>
@@ -102,8 +102,8 @@
     <div id="log">This is my log
         <br>
     </div>
+    -->
 
-     <!-- -->
 
-    <script src="static/myscripts.js"></script>
+    <script src="/lift_logger/static/myscripts.js"></script>
 {% endblock %}

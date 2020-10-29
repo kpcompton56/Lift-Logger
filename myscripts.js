@@ -64,8 +64,6 @@ function exc_field_displayer(element, lift_array, cardio_array, last_workout_arr
     if (last_workout_array[i][1] == this_exc_selector.value) {
       this_lift_div.firstElementChild.placeholder = last_workout_array[i][2][0];
 
-      this_lift_div.firstElementChild.placeholder.style.color = "red";
-
       this_lift_div.firstElementChild.nextElementSibling.nextElementSibling.placeholder = last_workout_array[i][2][1];
       this_lift_div.firstElementChild.nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.placeholder = last_workout_array[i][2][2];
     }
