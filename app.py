@@ -1,6 +1,6 @@
 #---------------------------------- Libraries to Load --------------------------------------------------------------
 import os
-
+#this is my test2
 import datetime
 
 from flask import Flask, flash, redirect, render_template, request, session, json
@@ -11,7 +11,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from models import users_db, exercises_db, sessions_db, workouts_db, widgets_db, SQL, sqlite3
 from helpers import login_required, get_time, apology
-
 #-------------------------------- Configuration --------------------------------------------------------------------
 # Configure application
 app = Flask(__name__)
